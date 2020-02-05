@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_05_180321) do
+ActiveRecord::Schema.define(version: 2020_02_05_192127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,22 @@ ActiveRecord::Schema.define(version: 2020_02_05_180321) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "contestant_projects", force: :cascade do |t|
+    t.bigint "contestant_id"
+    t.bigint "project_id"
+    t.index ["contestant_id"], name: "index_contestant_projects_on_contestant_id"
+    t.index ["project_id"], name: "index_contestant_projects_on_project_id"
+  end
+
+  create_table "contestants", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.string "hometown"
+    t.integer "years_of_experience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "material"
@@ -29,4 +45,6 @@ ActiveRecord::Schema.define(version: 2020_02_05_180321) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "contestant_projects", "contestants"
+  add_foreign_key "contestant_projects", "projects"
 end
